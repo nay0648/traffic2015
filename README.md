@@ -18,3 +18,28 @@ Currently only the simulation demo is available. A four-lane road is simulated, 
 # How to Run
 1. run on Windows: Just execute run.bat.
 2. run on Eclipse: Import the project as a Eclipse java project, and run cn.ac.ioa.hccl.atm.demo.SimulationDemo.
+
+# References
+```
+@inproceedings{na2015acoustic,
+  title={An acoustic traffic monitoring system: Design and implementation},
+  author={Na, Yueyue and Guo, Yanmeng and Fu, Qiang and Yan, Yonghong},
+  booktitle={2015 IEEE 12th Intl Conf on Ubiquitous Intelligence and Computing and 2015 IEEE 12th Intl Conf on Autonomic and Trusted Computing and 2015 IEEE 15th Intl Conf on Scalable Computing and Communications and Its Associated Workshops (UIC-ATC-ScalCom)},
+  pages={119--126},
+  year={2015},
+  organization={IEEE}
+}
+```
+
+```
+@article{na2016cross,
+  title={Cross array and rank-1 MUSIC algorithm for acoustic highway lane detection},
+  author={Na, Yueyue and Guo, Yanmeng and Fu, Qiang and Yan, Yonghong},
+  journal={IEEE Transactions on Intelligent Transportation Systems},
+  volume={17},
+  number={9},
+  pages={2502--2514},
+  year={2016},
+  publisher={IEEE}
+}
+```
