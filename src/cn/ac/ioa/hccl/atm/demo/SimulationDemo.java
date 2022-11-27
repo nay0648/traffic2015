@@ -21,14 +21,11 @@ private static final int FFT_SIZE=512;
 private static final int STFT_SHIFT=FFT_SIZE/2;
 private static final int NUM_LANES=4;
 private static final int CORR_TIME_WINDOW=200;
-// private static final int CORR_LOWER_FEXP=6500;
-// private static final int CORR_UPPER_FEXP=7000;
-private static final int CORR_LOWER_FEXP2=12000;
-private static final int CORR_UPPER_FEXP2=12500;
+private static final int CORR_LOWER_FEXP=14000;
+private static final int CORR_UPPER_FEXP=16000;
 private static final int ZONE_ELEVATION=5;
 
-// private CrossCorrelator corr;//used to calculate correlation matrix
-private CrossCorrelator corr2;
+private CrossCorrelator corr;//used to calculate correlation matrix
 private LaneDetector ldetector;//used to detect lanes
 private VehicleDetector vdetector;//used to watch vehicles
 	
@@ -69,16 +66,13 @@ private VehicleDetector vdetector;//used to watch vehicles
 		 * correlation matrix calculator used by different beamformers
 		 */
 		numframes=monitor.numFramesInTimeInterval(CORR_TIME_WINDOW);
-		// fi1=monitor.frequency2BinIndex(CORR_LOWER_FEXP);
-		// fi2=monitor.frequency2BinIndex(CORR_UPPER_FEXP);
-		// corr=new CrossCorrelator(monitor,numframes,fi1,fi2);
-		fi1=monitor.frequency2BinIndex(CORR_LOWER_FEXP2);
-		fi2=monitor.frequency2BinIndex(CORR_UPPER_FEXP2);
-		corr2=new CrossCorrelator(monitor,numframes,fi1,fi2);
+		fi1=monitor.frequency2BinIndex(CORR_LOWER_FEXP);
+		fi2=monitor.frequency2BinIndex(CORR_UPPER_FEXP);
+		corr=new CrossCorrelator(monitor,numframes,fi1,fi2);
 		
 		//lane detector
-		// ldetector=new ParzenLaneDetector(new Rank1MUSICSlicer(corr2),numlanes);
-		ldetector=new ParzenLaneDetector(new CrossDSSlicer(corr2),numlanes);
+		// ldetector=new ParzenLaneDetector(new Rank1MUSICSlicer(corr),numlanes);
+		ldetector=new ParzenLaneDetector(new CrossDSSlicer(corr),numlanes);
 		
 		/*
 		 * construct vehicle detector
@@ -91,9 +85,9 @@ private VehicleDetector vdetector;//used to watch vehicles
 		{
 			lanes[i]=new Lane(i);
 			
-			lanes[i].addZone(new BinwiseLaneModelZone(vagc,corr2,-ZONE_ELEVATION));
-			lanes[i].addZone(new BinwiseLaneModelZone(vagc,corr2,0));
-			lanes[i].addZone(new BinwiseLaneModelZone(vagc,corr2,ZONE_ELEVATION));
+			lanes[i].addZone(new CrossDSZone(vagc,corr,-ZONE_ELEVATION));
+			lanes[i].addZone(new CrossDSZone(vagc,corr,0));
+			lanes[i].addZone(new CrossDSZone(vagc,corr,ZONE_ELEVATION));
 		}
 		
 		vdetector=new VehicleDetector(monitor,lanes);
@@ -111,8 +105,7 @@ private VehicleDetector vdetector;//used to watch vehicles
 	
 	public void updateCorrelation() throws IOException 
 	{
-		// corr.updateTrafficInfo();
-		corr2.updateTrafficInfo();
+		corr.updateTrafficInfo();
 	}
 	
 	public static void main(String[] args) throws IOException
