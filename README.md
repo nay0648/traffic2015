@@ -13,6 +13,7 @@ Vehicle emits sounds as it travels along the road, which can be used for traffic
 
 # The Demo
 Currently only the simulation demo is available. A four-lane road is simulated, the lanes and the vehicles can be detected from the simulated moving sound sources.
+![image](https://github.com/nay0648/traffic2015/blob/main/fig/gui.png)
 
 # How to Run
 1. run on Windows: Just execute run.bat.
